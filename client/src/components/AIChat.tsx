@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, ArrowUp, Sparkles, Zap, DollarSign, HelpCircle, MessageCircle, X, Minimize2 } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 interface Message {
   id: string;
@@ -15,16 +16,19 @@ export default function AIChat() {
     {
       id: "welcome",
       role: "assistant",
-      content: "Welcome to BluebirdX Intelligence. I'm Leiah, your AI concierge. Ask me anything about rides, drivers, or pricing.",
+      content: "Welcome to BluebirdX Intelligence. I'm Leia, your AI concierge. Ask me anything about rides, drivers, or pricing.",
       timestamp: new Date(),
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [threadId, setThreadId] = useState<string | undefined>(undefined);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const chatMutation = trpc.assistant.chat.useMutation();
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -61,19 +65,49 @@ export default function AIChat() {
       inputRef.current?.focus();
     }, 50);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiMessage: Message = {
+    try {
+      const result = await chatMutation.mutateAsync({
+        message: userMessage.content,
+        threadId: threadId,
+      });
+
+      if (result.success && result.response) {
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: result.response,
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, aiMessage]);
+        
+        // Store thread ID for conversation continuity
+        if (result.threadId) {
+          setThreadId(result.threadId);
+        }
+      } else {
+        // Error response from API
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: `I'm having trouble connecting right now. ${result.error || "Please try again in a moment."}`,
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, errorMessage]);
+      }
+    } catch (error) {
+      console.error("Chat error:", error);
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "Processing with Leiah and Yoda AI agents. In production, this connects to your Supabase Edge Functions for intelligent responses tailored to your luxury transportation needs.",
+        content: "I apologize, but I'm experiencing technical difficulties. Please try again in a moment.",
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, aiMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
       // Re-focus after AI response to keep keyboard ready
       inputRef.current?.focus();
-    }, 1500);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -117,7 +151,7 @@ export default function AIChat() {
           {/* Tooltip */}
           <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
             <div className="glass-strong px-4 py-2 rounded-full whitespace-nowrap text-sm">
-              Ask Leiah anything
+              Ask Leia anything
             </div>
           </div>
         </div>
@@ -149,7 +183,7 @@ export default function AIChat() {
                   <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-background" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Leiah AI</h3>
+                  <h3 className="font-semibold text-sm">Leia AI</h3>
                   <p className="text-xs text-muted-foreground">Your luxury concierge</p>
                 </div>
               </div>
@@ -201,7 +235,7 @@ export default function AIChat() {
                         </div>
                       </div>
                     ) : (
-                      /* Leiah's Response - Flowing Text */
+                      /* Leia's Response - Flowing Text */
                       <div className="flex justify-start">
                         <div className="max-w-[85%]">
                           <div className="space-y-2">
@@ -220,7 +254,7 @@ export default function AIChat() {
                           </div>
                           <div className="text-left mt-1">
                             <span className="text-xs text-muted-foreground/60">
-                              Leiah • {message.timestamp.toLocaleTimeString([], {
+                              Leia • {message.timestamp.toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
                               })}
@@ -281,7 +315,7 @@ export default function AIChat() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={handleKeyDown}
-                      placeholder="Ask Leiah..."
+                      placeholder="Ask Leia..."
                       className="flex-1 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 text-sm h-9 px-4"
                       disabled={isLoading}
                     />
