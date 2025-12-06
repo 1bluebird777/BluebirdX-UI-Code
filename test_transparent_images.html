@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparent Vehicle Images - Preview</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(59, 130, 246, 0.3);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #60a5fa;
+            text-align: center;
+        }
+        
+        .image-container {
+            background: 
+                linear-gradient(45deg, #1e293b 25%, transparent 25%), 
+                linear-gradient(-45deg, #1e293b 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #1e293b 75%), 
+                linear-gradient(-45deg, transparent 75%, #1e293b 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            background-color: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+        }
+        
+        .vehicle-image {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));
+        }
+        
+        .info {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+        
+        .info-label {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .success-text {
+            color: #86efac;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Transparent Vehicle Images</h1>
+        <p class="subtitle">Background removed - Ready for BluebirdX 3D scene</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h2 class="card-title">Black Cadillac Escalade</h2>
+                <div class="image-container">
+                    <img src="client/public/vehicles/escalade-transparent.png" 
+                         alt="Cadillac Escalade" 
+                         class="vehicle-image">
+                </div>
+                <div class="info">
+                    <span class="info-label">Type:</span> Luxury SUV<br>
+                    <span class="info-label">Lane:</span> Middle (Radius 6.5)<br>
+                    <span class="info-label">Status:</span> ✅ Transparent Background
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">Silver Mercedes S-Class</h2>
+                <div class="image-container">
+                    <img src="client/public/vehicles/mercedes-s-transparent.png" 
+                         alt="Mercedes S-Class" 
+                         class="vehicle-image">
+                </div>
+                <div class="info">
+                    <span class="info-label">Type:</span> Executive Sedan<br>
+                    <span class="info-label">Lane:</span> Inner (Radius 4.5)<br>
+                    <span class="info-label">Status:</span> ✅ Transparent Background
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title">White Mercedes Sprinter</h2>
+                <div class="image-container">
+                    <img src="client/public/vehicles/sprinter-transparent.png" 
+                         alt="Mercedes Sprinter" 
+                         class="vehicle-image">
+                </div>
+                <div class="info">
+                    <span class="info-label">Type:</span> Luxury Van<br>
+                    <span class="info-label">Lane:</span> Outer (Radius 8.5)<br>
+                    <span class="info-label">Status:</span> ✅ Transparent Background
+                </div>
+            </div>
+        </div>
+        
+        <div class="success">
+            <div class="success-icon">✨</div>
+            <p class="success-text">All vehicle backgrounds successfully removed!</p>
+            <p style="color: #94a3b8; margin-top: 10px;">
+                Clean transparent backgrounds will integrate seamlessly with the dark theme.<br>
+                Images are now ready for use in the OrbitalVehicles3D component.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
