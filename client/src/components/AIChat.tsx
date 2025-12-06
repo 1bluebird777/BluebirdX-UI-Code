@@ -218,7 +218,7 @@ export default function AIChat() {
                     {message.role === "user" ? (
                       /* User Message */
                       <div className="flex justify-end">
-                        <div className="max-w-[80%]">
+                        <div className="max-w[80%]">
                           <div className="relative px-4 py-3 rounded-2xl rounded-tr-sm bg-gradient-to-r from-accent/30 to-accent/20 border border-accent/30">
                             <div className="text-sm text-foreground leading-relaxed">
                               {message.content}
@@ -237,7 +237,7 @@ export default function AIChat() {
                     ) : (
                       /* Leia's Response - Flowing Text */
                       <div className="flex justify-start">
-                        <div className="max-w-[85%]">
+                        <div className="max-w[85%]">
                           <div className="space-y-2">
                             {message.content.split('. ').map((sentence, idx) => (
                               <p
@@ -254,7 +254,7 @@ export default function AIChat() {
                           </div>
                           <div className="text-left mt-1">
                             <span className="text-xs text-muted-foreground/60">
-                              Leia â€¢ {message.timestamp.toLocaleTimeString([], {
+                              Leia â " {message.timestamp.toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
                               })}
