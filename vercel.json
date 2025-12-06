@@ -1,6 +1,17 @@
 {
-  "buildCommand": "cd client && pnpm install && pnpm run build",
-  "installCommand": "pnpm install --shamefully-hoist",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
   "framework": null,
-  "outputDirectory": "client/dist"
+  "outputDirectory": "dist/public",
+  "functions": {
+    "dist/index.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/dist/index.js"
+    }
+  ]
 }
