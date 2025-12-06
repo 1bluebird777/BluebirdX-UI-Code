@@ -1,17 +1,11 @@
 {
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "framework": null,
   "outputDirectory": "dist/public",
-  "functions": {
-    "dist/index.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/dist/index.js"
+      "src": "/api/trpc/(.*)",
+      "dest": "/api/trpc/[trpc].ts"
     }
   ]
 }
