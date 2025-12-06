@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd client && pnpm install && pnpm run build",
+  "installCommand": "pnpm install --shamefully-hoist",
+  "framework": null,
+  "outputDirectory": "client/dist"
+}
